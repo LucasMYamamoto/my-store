@@ -1,13 +1,94 @@
-<h1>Control Structure</h1>
 
-<div>
+<h1>Form</h1>
+<form (ngSubmit)="onRegister()" #myForm="ngForm">
+<div class="input.group">
+  <label for="">Name</label>
+  <input type="text" required id="name" name="name" [(ngModel)]="register.name">
+  <p>Mensajes de error</p>
+  <label for="">Email</label>
+  <input type="text" required id="email" name="email" [(ngModel)]="register.email">
+  <p>Mensajes de error</p>
+  <label for="">Password</label>
+  <input type="password" required id="password" name="password" [(ngModel)]="register.password">
+  <p>Mensajes de error</p>
+</div>
+<button type="submit" [disabled]="myForm.invalid">Register</button>
+</form>
+
+<hr>
+<h1>Class & styles</h1>
+<input type="text" required #nameInput4="ngModel" [(ngModel)]="person.name">
+<hr class="line-error" [ngClass]="{
+  'valid': nameInput4.valid,
+  'invalid': nameInput4.invalid
+}">
+<p class="message-error" [class.invalid]="nameInput4.invalid">
+  El campo es requerido
+</p>
+<div class="styles">
+  <div>
+    <input type="number" required [(ngModel)]="box.width">
+    <input type="number" required [(ngModel)]="box.height">
+    <input type="color" required [(ngModel)]="box.background">
+  </div>
+  <div>
+    <div [ngStyle]="{
+    'width.px': box.width,
+    'height.px': box.height,
+    'background-color': box.background,
+    'display':'block'
+    }"></div>
+  </div>
+</div>
+
+
+<hr>
+<h1>Class & styles</h1>
+<input type="text" required #nameInput2="ngModel" [(ngModel)]="person.name">
+<p class="message-error" [class.invalid]="nameInput2.invalid">
+  El campo es requerido
+</p>
+<label>Nombre</label>
+<input type="text" required #nameInput3="ngModel" [(ngModel)]="person.name">
+<p [style.font-style]="nameInput3.invalid ? 'italic' : 'normal' ">Texto Texto Texto</p>
+<div class="styles">
+  <div>
+    <input type="text" [(ngModel)]="widthImg">
+  </div>
+  <div>
+    <img [style.width.px]="widthImg" [src]="person.avatar" alt="">
+  </div>
+</div>
+
+<hr>
+<h1>Control Structure</h1>
+<h2>Ng Switch</h2>
+<input type="text" required [(ngModel)]="person.name">
+<div [ngSwitch]="person.name">
+  <p *ngSwitchCase="'Lucas'">
+    La persona es Lucas
+  </p>
+  <p *ngSwitchCase="'Benja'">
+    La persona es Benja
+  </p>
+  <p *ngSwitchCase="'Lupe'">
+    La persona es Lupe
+  </p>
+  <p *ngSwitchDefault>No hace match</p>
+</div>
+
+
+<br>
+<h2>Ng For</h2>
+<div class="products--grid">
   <div *ngFor="let product of products">
-    <img width="250" [src]="product.image" alt="">
+    <img [src]="product.image" alt="">
     <h2>{{ product.price }}</h2>
     <p>{{ product.name }}</p>
   </div>
 </div>
-
+<br>
+<h2>Ng If</h2>
 <input type="text" required [(ngModel)]="newName">
 <button (click)="addName()">Add Name</button>
 <ul>
@@ -16,7 +97,7 @@
     <button (click)="deleteName(i)">Delete</button>
   </li>
 </ul>
-
+<br>
 <input type="text" required [(ngModel)]="person.name">
 <p *ngIf="person.name === 'Lucas'">Soy Lucas</p>
 <p *ngIf="person.name === 'Lupe' && person.age === 36; else elseBlock">Soy Lupe</p>
@@ -40,7 +121,11 @@
 <button (click)="toggleButton()">Toggle Button</button>
 <p>Edad: {{person.age }}</p>
 <button (click)="increaseAge()">Age ++</button>
-<div class="box" (scroll)="onScroll($event)">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam mollitia magni ipsum possimus distinctio rem doloribus sapiente. Iste aut harum natus maiores et ducimus earum doloribus soluta, praesentium corrupti. Quibusdam.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam mollitia magni ipsum possimus distinctio rem doloribus sapiente. Iste aut harum natus maiores et ducimus earum doloribus soluta, praesentium corrupti. Quibusdam.</div>
+<div class="box" (scroll)="onScroll($event)">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam mollitia
+  magni ipsum possimus distinctio rem doloribus sapiente. Iste aut harum natus maiores et ducimus earum doloribus
+  soluta, praesentium corrupti. Quibusdam.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam mollitia
+  magni ipsum possimus distinctio rem doloribus sapiente. Iste aut harum natus maiores et ducimus earum doloribus
+  soluta, praesentium corrupti. Quibusdam.</div>
 <p>Name: {{person.name}}</p>
 <input type="text" [value]="person.name" (keyup)="changeName($event)">
 
@@ -58,9 +143,9 @@
 
 <h1>Hola Mundo!</h1>
 <h2>{{'Hola mundo'.repeat(5)}}</h2>
-<p>3 + 3 = {{3 + 3 }}</p>
+<p>3 + 3 = {{ 3 + 3 }}</p>
+<p>{{ [1,2].reverse }}</p>
 <h3>Hola, soy {{ name }} y tengo {{ age }}</h3>
-<img src={{img}} alt="img">
+<img width="200" src={{img}} alt="img">
 
 <hr>
-

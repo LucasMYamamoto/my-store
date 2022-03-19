@@ -4,3 +4,78 @@
   overflow: auto;
   background-color: red;
 }
+.products--grid{
+  display: grid;
+  // grid-template-columns: repeat(5,1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap:15px;
+  div {
+    img{
+      width: 100%;
+      border-radius: 10px;
+    }
+    h2,p {
+      margin: 0;
+    }
+  }
+}
+
+.message-error{
+  background-color: red;
+  color: white;
+  opacity: 0;
+  transition: all linear .5s;
+  &.invalid {
+    opacity: 1;
+  }
+}
+
+.styles{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.line-error {
+  height: 0;
+  border-bottom: 1px solid;
+  &.invalid{
+    border-color: red;
+  }
+  &.valid{
+    border-color: green;
+  }
+}
+
+
+
+// Mobile
+// .products--grid {
+//   display: flex;
+//   flex-direction: column;
+
+//   div {
+//       img {
+//           width: 100%;
+//           border-radius: 10px;
+//       }
+//       h2, p {
+//           margin: 0;
+//       }
+//   }
+// }
+// Tablet
+// @media screen and (min-width: 30em) {
+//   .products--grid {
+//       display: grid;
+//       grid-template-columns: repeat(2, 1fr);
+//       grid-gap: 15px;
+//   }
+// }
+
+//Desktop
+// No es necesario poner el display de nuevo ni el gap por los hereda del otro.
+// @media screen and (min-width: 40em) {
+//   .products--grid {
+//       grid-template-columns: repeat(5, 1fr);
+//   }
+// }
