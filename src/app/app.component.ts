@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Product} from './product.model'
+
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,8 @@ import { Product} from './product.model'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  imgParent='';
+  showImg =true;
   widthImg= 10;
   name = 'Lucas';
   age= 18;
@@ -18,8 +20,6 @@ export class AppComponent {
     'email':'',
     'password': ''
   }
-
-
 
   person = {
     name: 'Lucas',
@@ -33,39 +33,13 @@ export class AppComponent {
     height: 100,
     background: 'red'
   }
-  products: Product[] = [
-    {
-      name: 'EL mejor juguete',
-      price: 565,
-      image: './assets/images/toy.jpg',
-      category: 'all',
-    },
-    {
-      name: 'Bicicleta casi nueva',
-      price: 356,
-      image: './assets/images/bike.jpg'
-    },
-    {
-      name: 'Colleción de albumnes',
-      price: 34,
-      image: './assets/images/album.jpg'
-    },
-    {
-      name: 'Mis libros',
-      price: 23,
-      image: './assets/images/books.jpg'
-    },
-    {
-      name: 'Casa para perro',
-      price: 34,
-      image: './assets/images/house.jpg'
-    },
-    {
-      name: 'Gafas',
-      price: 3434,
-      image: './assets/images/glasses.jpg'
-    }
-  ]
+
+  // product: Product = {
+  //   id: '1',
+  //   name: 'Product 1',
+  //   image: './assets/images/toy.jpg',
+  //   price: 100
+  // }
 
   toggleButton(){
     this.btnDisabled= !this.btnDisabled;
@@ -98,6 +72,16 @@ export class AppComponent {
   onRegister(){
     console.log(this.register);
 
+  }
+
+  onLoaded(img: string){
+    console.log('log padre',img);
+
+
+  }
+
+  toggleImg(){
+    this.showImg = !this.showImg;
   }
 
 }
