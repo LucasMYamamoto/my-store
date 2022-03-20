@@ -1,3 +1,9 @@
-h2, p {
+h2,
+p {
   margin: 0;
+}
+.imgDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

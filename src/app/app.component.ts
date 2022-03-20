@@ -8,16 +8,16 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  imgParent='';
-  showImg =true;
-  widthImg= 10;
+  imgParent = '';
+  showImg = true;
+  widthImg = 10;
   name = 'Lucas';
-  age= 18;
+  age = 18;
   img = 'https://www.w3schools.com/howto/img_avatar.png';
-  btnDisabled =true;
+  btnDisabled = true;
   register = {
     'name': '',
-    'email':'',
+    'email': '',
     'password': ''
   }
 
@@ -27,8 +27,8 @@ export class AppComponent {
     avatar: 'https://www.w3schools.com/howto/img_avatar.png'
   }
   names: string[] = ['Lucas', 'Lupe', "Benja"];
-  newName='';
-  box ={
+  newName = '';
+  box = {
     width: 100,
     height: 100,
     background: 'red'
@@ -41,46 +41,44 @@ export class AppComponent {
   //   price: 100
   // }
 
-  toggleButton(){
-    this.btnDisabled= !this.btnDisabled;
+  toggleButton() {
+    this.btnDisabled = !this.btnDisabled;
   }
 
-  increaseAge(){
+  increaseAge() {
     this.person.age += 1;
   }
 
-  onScroll(event: Event){
+  onScroll(event: Event) {
     const element = event.target as HTMLElement;
-    console.log(element.scrollTop);
+    // console.log(element.scrollTop);
   }
 
-  changeName(event: Event){
+  changeName(event: Event) {
     const element = event.target as HTMLInputElement;
     element.value;
     this.person.name = element.value;
   }
 
-  addName(){
+  addName() {
     this.names.push(this.newName);
-    this.newName ='';
+    this.newName = '';
   }
 
-  deleteName(index: number){
-    this.names.splice(index,1);
+  deleteName(index: number) {
+    this.names.splice(index, 1);
   }
 
-  onRegister(){
+  onRegister() {
     console.log(this.register);
 
   }
 
-  onLoaded(img: string){
-    console.log('log padre',img);
-
-
+  onLoaded(img: string) {
+    // console.log('log padre',img);
   }
 
-  toggleImg(){
+  toggleImg() {
     this.showImg = !this.showImg;
   }
 

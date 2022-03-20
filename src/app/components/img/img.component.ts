@@ -9,10 +9,11 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
 
   img: string = '';
 
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('img')
   set changeImg(newImg: string) {
     this.img = newImg;
-    console.log('change just img =>', this.img);
+    // console.log('change just img =>', this.img);
 
   }
   @Input() alt: string = '';
@@ -24,35 +25,39 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
   constructor() {
     //Before render
     //No async features, runs only once time
-    console.log('constructor', 'imgValue =>', this.img);
+    // console.log('constructor', 'imgValue =>', this.img);
   }
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnChanges(changes: SimpleChanges): void {
     //Before - during render
     //Inputs changes - runs X times
-    console.log('ngOnChanges', 'imgValue =>', this.img);
-    console.log('changes', changes);
+    // console.log('ngOnChanges', 'imgValue =>', this.img);
+    // console.log('changes', changes);
   }
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     //Before render
     //Async function are available - runs only once time
-    console.log('ngOnInit', 'imgValue =>', this.img);
+    // console.log('ngOnInit', 'imgValue =>', this.img);
     // this.counterFn = window.setInterval(() => {
     //   this.counter += 1;
     //   console.log('run counter');
     // }, 1000)
   }
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngAfterViewInit(): void {
     //After render
     //Hanlder children
-    console.log('ngAfterViewInit');
+    // console.log('ngAfterViewInit');
   }
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnDestroy(): void {
     //delete component
-    console.log('ngOnDestroy');
+    // console.log('ngOnDestroy');
     // window.clearInterval(this.counterFn);
   }
 
@@ -62,7 +67,7 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
   }
 
   imgLoaded() {
-    console.log('log hijo');
+    // console.log('log hijo');
     this.loaded.emit(this.img);
   }
 
