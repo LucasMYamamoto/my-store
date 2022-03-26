@@ -3,6 +3,7 @@
 </div>
 <h2>$ {{ product.price | currency:'ARS' }}</h2>
 <p>Name: {{ product.title }}</p>
+<p>Taxes: {{ product?.taxes | currency:'ARS' }} </p>
 <p appHighlight> {{ product.description }}</p>
 <button (click)="onShowDetail()">Show details</button>
 <button (click)="onAddToCart()">Add cart</button>

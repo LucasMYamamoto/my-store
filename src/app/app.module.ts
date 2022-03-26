@@ -1,5 +1,7 @@
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { TimeInterceptor } from './interceptors/time.interceptor';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -13,6 +15,7 @@ import { ReversePipe } from './pipes/reverse.pipe';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { ReplaceNumbersPipe } from './pipes/replace-numbers.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
+
 
 //SwiperJS
 import { SwiperModule } from 'swiper/angular';
@@ -36,7 +39,10 @@ import { SwiperModule } from 'swiper/angular';
     HttpClientModule,
     SwiperModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: TimeInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

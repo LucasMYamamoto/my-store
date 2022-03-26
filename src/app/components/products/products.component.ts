@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { isNgTemplate } from '@angular/compiler';
 import { StoreService } from 'src/app/services/store.service';
 import { subSeconds } from 'date-fns';
-import { subscribeOn } from 'rxjs';
+import { subscribeOn, switchMap, zip } from 'rxjs';
+
 
 
 @Component({
@@ -27,13 +28,15 @@ export class ProductsComponent implements OnInit {
     price: 0,
     images: [],
     description: '',
-    category:  {
-      id:'',
-    name: ''}
+    category: {
+      id: '',
+      name: ''
+    }
   }
 
-  limit= 10;
-  offset = 0; 
+  limit = 10;
+  offset = 0;
+  statusDetail: 'loading' | 'success' | 'error' | 'initial' = 'initial';
 
   constructor(
     private storeService: StoreService,
@@ -43,8 +46,8 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productsService.getProductByPage( 10 , 0 )
-    .subscribe(data => { this.products = data; this.offset += this.limit; })
+    this.productsService.getProductByPage(10, 0)
+      .subscribe(data => { this.products = data; this.offset += this.limit; })
   }
 
   onAddToShoppingCart(product: Product) {
@@ -57,55 +60,77 @@ export class ProductsComponent implements OnInit {
   }
 
   onShowDetail(id: string) {
-    console.log('id product', id);
+    this.statusDetail = 'loading';
+    // console.log('id product', id);
+    this.toggleProductDetail();
     this.productsService.getProduct(id)
+      .subscribe(data => {
+        // this.toggleProductDetail();
+        this.productChosen = data;
+        this.statusDetail = 'success';
+      }, errorMsg => {
+        window.alert(errorMsg);
+        // console.log(response);
+        this.statusDetail = 'error';
+      })
+  }
+
+  readAndUpdate(id: string) {
+    this.productsService.getProduct(id)
+    .pipe(
+      switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+    )
     .subscribe(data => {
-      this.toggleProductDetail();
-      this.productChosen=data;
+      console.log(data);
+    });
+    this.productsService.fetchReadAndUpdate(id, {title: 'change'})
+    .subscribe(response => {
+      const read = response[0];
+      const update = response[1];
     })
   }
 
-  createNewProduct(){
+  createNewProduct() {
     const product: CreateProductDTO = {
-      title:'Nuevo producto',
+      title: 'Nuevo producto',
       description: ' Descripcion Lorem Ipsum',
       images: ['https://picsum.photos/id/237/200/300'],
       price: 1000,
-      categoryId: 2,  
+      categoryId: 2,
     }
     this.productsService.create(product)
-    .subscribe(data => {
-      console.log('product', data);
-      this.products.unshift(data);
-    });
+      .subscribe(data => {
+        console.log('product', data);
+        this.products.unshift(data);
+      });
   }
 
-  updateProduct(){
+  updateProduct() {
     const changes = {
-      title:' Nuevo Titulo',
+      title: ' Nuevo Titulo',
       description: ' Lorem Ipsum Ate Logo'
     }
     const id = this.productChosen.id;
     this.productsService.update(id, changes)
-    .subscribe( data => {
-      console.log('Update',data);
-      const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
-      this.products[productIndex] = data;
-    });
+      .subscribe(data => {
+        console.log('Update', data);
+        const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
+        this.products[productIndex] = data;
+      });
   }
 
-  deleteProduct(){
+  deleteProduct() {
     const id = this.productChosen.id;
     this.productsService.delete(id)
-    .subscribe(() => {
-      const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
-      this.products.splice(productIndex,1);
-      this.showProductDetail = false;
-    });
+      .subscribe(() => {
+        const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
+        this.products.splice(productIndex, 1);
+        this.showProductDetail = false;
+      });
   }
 
   loadMore() {
-    this.productsService.getProductByPage( this.limit , this.offset )
-    .subscribe(data => { this.products = this.products.concat(data); this.offset += this.limit; })
+    this.productsService.getProductByPage(this.limit, this.offset)
+      .subscribe(data => { this.products = this.products.concat(data); this.offset += this.limit; })
   }
 }

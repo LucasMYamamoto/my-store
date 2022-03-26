@@ -6,6 +6,7 @@
 <p> {{ 'hOLA BascVasas' | uppercase}}</p>
 <p> {{ 'hOLA BascVasas' | reverse}}</p> -->
 <button (click)="createNewProduct()">Create</button>
+<button (click)="onShowDetail('121212')">Detail not found</button>
 
 <div class="products--grid">
   <app-product
@@ -19,6 +20,7 @@
 </div>
 
 <div class="product-detail" [class.active]="showProductDetail">
+   {{ statusDetail }}
   <div *ngIf="productChosen">
     <button (click)="toggleProductDetail()">Close</button>
     <h1> {{ productChosen.title }} </h1>
