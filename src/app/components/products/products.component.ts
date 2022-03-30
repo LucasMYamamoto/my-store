@@ -1,6 +1,6 @@
 import { ProductsService } from './../../services/products.service';
 import { Product, CreateProductDTO, UpdateProductDTO } from './../../../models/product.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { isNgTemplate } from '@angular/compiler';
 import { StoreService } from 'src/app/services/store.service';
 import { subSeconds } from 'date-fns';
@@ -13,11 +13,19 @@ import { subscribeOn, switchMap, zip } from 'rxjs';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent {
 
   total: number = 0;
   myShoppingCart: Product[] = [];
-  products: Product[] = [];
+  @Input() products: Product[] = [];
+  // @Input() productId: string | null = null;
+  @Input()
+  set productId(id: string | null) {
+    if (id) {
+      this.onShowDetail(id);
+    }
+  };
+  @Output() loadMore = new EventEmitter();
   showProductDetail = false;
   today = new Date();
   date = new Date(2025, 7, 8);
@@ -34,8 +42,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  limit = 10;
-  offset = 0;
+
   statusDetail: 'loading' | 'success' | 'error' | 'initial' = 'initial';
 
   constructor(
@@ -43,11 +50,6 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService
   ) {
     this.myShoppingCart = this.storeService.getShoppingCart();
-  }
-
-  ngOnInit(): void {
-    this.productsService.getProductByPage(10, 0)
-      .subscribe(data => { this.products = data; this.offset += this.limit; })
   }
 
   onAddToShoppingCart(product: Product) {
@@ -62,7 +64,9 @@ export class ProductsComponent implements OnInit {
   onShowDetail(id: string) {
     this.statusDetail = 'loading';
     // console.log('id product', id);
-    this.toggleProductDetail();
+    if (!this.showProductDetail) {
+      this.showProductDetail = true
+    }
     this.productsService.getProduct(id)
       .subscribe(data => {
         // this.toggleProductDetail();
@@ -77,17 +81,17 @@ export class ProductsComponent implements OnInit {
 
   readAndUpdate(id: string) {
     this.productsService.getProduct(id)
-    .pipe(
-      switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
-    )
-    .subscribe(data => {
-      console.log(data);
-    });
-    this.productsService.fetchReadAndUpdate(id, {title: 'change'})
-    .subscribe(response => {
-      const read = response[0];
-      const update = response[1];
-    })
+      .pipe(
+        switchMap((product) => this.productsService.update(product.id, { title: 'change' })),
+      )
+      .subscribe(data => {
+        console.log(data);
+      });
+    this.productsService.fetchReadAndUpdate(id, { title: 'change' })
+      .subscribe(response => {
+        const read = response[0];
+        const update = response[1];
+      })
   }
 
   createNewProduct() {
@@ -129,8 +133,8 @@ export class ProductsComponent implements OnInit {
       });
   }
 
-  loadMore() {
-    this.productsService.getProductByPage(this.limit, this.offset)
-      .subscribe(data => { this.products = this.products.concat(data); this.offset += this.limit; })
+  onLoadMore() {
+    this.loadMore.emit();
   }
+
 }

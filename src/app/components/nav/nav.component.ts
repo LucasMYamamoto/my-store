@@ -1,7 +1,11 @@
+import { Category } from './../../../models/product.model';
+import { CategoriesService } from './../../services/categories.service';
+import { ProductsService } from './../../services/products.service';
 import { StoreService } from 'src/app/services/store.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'src/models/user.model';
+
 
 @Component({
   selector: 'app-nav',
@@ -12,10 +16,12 @@ export class NavComponent implements OnInit {
   activeMenu = false;
   counter = 0;
   profile: User | null = null;
-
+  categories: Category[] = [];
   constructor(
     private storeService: StoreService,
     private authService: AuthService,
+    private productsService: ProductsService,
+    private categoriesService: CategoriesService
   ) {
 
   }
@@ -24,6 +30,7 @@ export class NavComponent implements OnInit {
     this.storeService.myCart$.subscribe(products => {
       this.counter = products.length;
     });
+    this.getAllCategories();
   }
 
   toggleMenu() {
@@ -49,4 +56,10 @@ export class NavComponent implements OnInit {
   //     this.profile = user;
   //   });
   // }
+
+  getAllCategories(){
+    this.categoriesService.getAll().subscribe( data => {
+      this.categories = data;
+    });
+  }
 }
