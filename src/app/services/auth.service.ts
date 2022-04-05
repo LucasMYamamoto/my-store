@@ -1,6 +1,6 @@
 import { TokenService } from './token.service';
-import { User } from './../../models/user.model';
-import { Auth } from './../../models/auth.model';
+import { User } from '../models/user.model';
+import { Auth } from '../models/auth.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';

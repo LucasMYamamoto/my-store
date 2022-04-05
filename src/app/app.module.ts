@@ -1,3 +1,4 @@
+import { NotFoundComponent } from './not-found/not-found.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { TimeInterceptor } from './interceptors/time.interceptor';
 import { FormsModule } from '@angular/forms';
@@ -7,55 +8,26 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ImgComponent } from './components/img/img.component';
-import { ProductComponent } from './components/product/product.component';
-import { ProductsComponent } from './components/products/products.component';
-import { NavComponent } from './components/nav/nav.component';
-import { ReversePipe } from './pipes/reverse.pipe';
-import { TimeAgoPipe } from './pipes/time-ago.pipe';
-import { ReplaceNumbersPipe } from './pipes/replace-numbers.pipe';
-import { HighlightDirective } from './directives/highlight.directive';
+import { QuicklinkModule} from 'ngx-quicklink';
+
 
 
 //SwiperJS
 import { SwiperModule } from 'swiper/angular';
-import { HomeComponent } from './pages/home/home.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { RecoveryComponent } from './pages/recovery/recovery.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { MyCartComponent } from './pages/my-cart/my-cart.component';
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImgComponent,
-    ProductComponent,
-    ProductsComponent,
-    NavComponent,
-    ReversePipe,
-    TimeAgoPipe,
-    ReplaceNumbersPipe,
-    HighlightDirective,
-    HomeComponent,
-    NotFoundComponent,
-    CategoryComponent,
-    LoginComponent,
-    RegisterComponent,
-    RecoveryComponent,
-    ProfileComponent,
-    MyCartComponent,
-    ProductDetailComponent
+    NotFoundComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SwiperModule
+    QuicklinkModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TimeInterceptor, multi: true },

@@ -1,5 +1,5 @@
-import { CreateProductDTO } from './../../models/product.model';
-import { CreateUserDTO, User } from './../../models/user.model';
+import { CreateProductDTO } from '../models/product.model';
+import { CreateUserDTO, User } from '../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
